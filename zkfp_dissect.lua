@@ -61,6 +61,8 @@ local f_text   = ProtoField.string("zkfp.text"  , "Text")
 
 p_zkfp.fields = { f_cmd, f_chksum, f_sessid, f_replid, f_text }
 
+p_zkfp.prefs.udp_port=Pref.uint("UDP port", 4370, "UDP port used by ZKFP")
+
 local d_data = Dissector.get("data")
 
 function p_zkfp.dissector(buf, pinfo, tree)
@@ -80,4 +82,4 @@ function p_zkfp.dissector(buf, pinfo, tree)
 end
 
 local udp_encap_table = DissectorTable.get("udp.port")
-udp_encap_table:add(4370, p_zkfp)
+udp_encap_table:add(p_zkfp.prefs.udp_port, p_zkfp)
